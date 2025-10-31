@@ -1,0 +1,179 @@
+\chapter{Trotter based Hamiltonian simulation}
+
+The Hamiltonian simulation problem with a time-independent Hamiltonian, or the Hamiltonian simulation problem for short is the following problem: given an initial state $\ket{\psi_0}$ and a Hamiltonian $H$, evaluate the quantum state at time $t$ according to $\ket{\psi(t)}=e^{-\I t H}\ket{\psi_0}$. Hamiltonian simulation is of immense importance in characterizing quantum dynamics for a diverse range of systems and situations in quantum physics, chemistry and materials science. Simulation of one quantum Hamiltonian by another quantum system was also one of the motivations of Feynman's 1982 proposal for design of quantum computers~\cite{Feynman1982}. We have also seen that Hamiltonian simulation appears as a quantum subroutine in numerous other quantum algorithms, such as QPE and its various applications. 
+
+The Hamiltonian simulation problem can also be viewed as a linear ODE:
+\begin{equation}
+\partial_t \psi(t)=-\I H\psi(t), \quad \psi(0)=\psi_0.
+\end{equation}
+However, thanks to the unitarity of the operator $e^{-\I t H}$ for any $t$, we do not need to store the full history of the quantum states as in \cref{sec:linear_ode}, and can instead focus on the quantum state at time $t$ of interest.
+
+Following the conceptualization of a universal quantum simulator using a Trotter decomposition of the time evolution operator $e^{-\I tH}$ \cite{Lloyd1996},
+many new quantum algorithms for Hamiltonian simulation have been proposed.
+%  a number of new ~\cite{BerryAhokasCleveEtAl2007,BerryChildsCleveEtAl2015,LowChuang2017,LowWiebe2019,Campbell2019}.  Detailed assessment of these algorithms, with continued improvement of theoretical error bounds, has since emerged as a very active area of research~\cite{BerryChilds2012,BerryCleveGharibian2014,BerryChildsKothari2015,ChildsMaslovNamEtAl2018,ChildsOstranderSu2019,Low2019,ChildsSu2019,ChildsSuTranEtAl2020,ChenHuangKuengEtAl2020,SahinogluSomma2020,AnFangLin2021,SuBerryWiebeEtAl2021}.
+We will discuss some more advanced methods in later chapters.
+This chapter focuses on the Trotter based Hamiltonian simulation method (also called the product formula).
+
+
+\section{Trotter splitting}
+
+Consider the Hamiltonian simulation problem for $H=H_1+H_2$, where $e^{-\I H_1 \Delta t}$ and $e^{-\I H_2 \Delta t}$ can be efficiently computed at least for some $\Delta t$.
+In general $[H_1,H_2]\ne 0$, and the splitting of the evolution of $H_1,H_2$  needs to be implemented via the Lie product formula
+\begin{equation}
+ e^{-\I t H}=\lim_{L\to \infty}\left(e^{-\I \frac{t}{L} H_1}e^{-\I \frac{t}{L} H_2}\right)^L.
+\end{equation}
+When taking $L$ to be a finite number, and let $\Delta t=t/L$, this gives the simplest first order Trotter method with
+\begin{equation}
+\norm{e^{-\I \Delta t H}-e^{-\I \Delta t H_1}e^{-\I \Delta t H_2}}=\Or(\Delta t^2),
+\label{eqn:trotter_coarse_error}
+\end{equation}
+ 
+Therefore to perform Hamiltonian simulation to time $t$, the error is 
+\begin{equation}
+\norm{e^{-\I t H}-\left(e^{-\I \frac{t}{L} H_1}e^{-\I \frac{t}{L} H_2}\right)^L}=\Or(\Delta t^2 L)=\Or\left(\frac{t^2}{L}\right).
+\end{equation}
+So to reach precision $\epsilon$ in the operator norm,  we need 
+\begin{equation}
+L=\Or(t^2 \epsilon^{-1}).
+\end{equation}
+This can be improved to the second order Trotter method (also called the symmetric Trotter splitting, or Strang splitting) 
+\begin{equation}
+\norm{e^{-\I \Delta t H}-e^{-\I \Delta t/2 H_2}e^{-\I \Delta t H_1}e^{-\I \Delta t/2 H_2}}=\Or(\Delta t^3).
+\end{equation}
+Following a similar analysis to the first order method, we find that to reach precision $\epsilon$ we need 
+\begin{equation}
+L=\Or(t^{3/2}\epsilon^{-1/2}).
+\end{equation}
+Higher order Trotter methods are also available, such as the $p$-th order Suzuki formula.
+The local truncation error is $(\Delta t)^{p+1}$. 
+Therefore to reach precision $\epsilon$, we need
+\begin{equation}
+L=\Or(t^{\frac{p+1}{p}}\epsilon^{-1/p}).
+\end{equation}
+This is often written as $L=\Or(t^{1+o(1)}\epsilon^{-o(1)})$ as $p\to \infty$.
+
+ 
+
+\begin{exam}[Simulating transverse field Ising model]
+For the one dimensional transverse field Ising model (TFIM) with nearest neighbor interaction in \cref{eqn:ham_tfim}, wince all Pauli-$Z_i$ operators commute, we have
+\begin{equation}
+e^{-\I t H_1}:=e^{\I t\sum_{i=1}^{n-1} Z_iZ_{i+1}}=\prod_{i=1}^{n-1} e^{\I t Z_i Z_{i+1}}.
+\end{equation}
+Each $e^{\I t Z_i Z_{i+1}}$ is a rotation involving only the qubits $i,j$, and the splitting has no error. 
+Similarly
+\begin{equation}
+e^{-\I t H_2}:=e^{g\sum_{i} X_i}=\prod_{i} e^{\I t g X_i},
+\end{equation}
+and each $e^{\I t g X_i}$ can be implemented independently without error.
+\end{exam}
+
+\begin{exam}[Particle in a potential]
+Let $H=-\Delta_{\vr}+V(\vr)=H_1+H_2$ be the Hamiltonian of a particle in a potential field $V(\vr)$, where $\vr\in \Omega=[0,1]^d$ with periodic boundary conditions.
+After discretization using Fourier modes,  $e^{\I H_1t}$ can be efficiently performed by diagonalizing $H_1$ in the Fourier space, and $e^{\I H_2t}$ can be efficiently performed since $V(\vr)$ is diagonal in the real space.
+\end{exam}
+
+
+\section{Commutator type error bound}
+
+In this section we try to refine the error bounds in \cref{eqn:trotter_coarse_error} by evaluating the preconstant explicitly.
+For simplicity we only focus on the first order Trotter formula. 
+The Trotter propagator $\wt{U}(t)=e^{-\I t H_1}e^{-\I t H_2}$ satisfies the equation
+\begin{equation}
+\begin{aligned}
+\I\partial_t \wt{U}(t)&=H_1 e^{-\I t H_1}e^{-\I t H_2}+e^{-\I t H_1}H_2e^{-\I t H_2}\\
+&=(H_1+H_2)e^{-\I t H_1}e^{-\I t H_2}+e^{-\I t H_1}H_2e^{-\I t H_2}-H_2 e^{-\I t H_1}e^{-\I t H_2}\\
+&=H\wt{U}(t)+[e^{-\I t H_1},H_2]e^{-\I t H_2},
+\end{aligned}
+\end{equation}
+with initial condition $\wt{U}(0)=I$. 
+By Duhamel's principle, and let $U(t)=e^{-\I t H}$, we have
+\begin{equation}
+\wt{U}(t)=U(t)-\I\int_{0}^{t} e^{-\I H (t-s)} [e^{-\I s H_1},H_2]e^{-\I s H_2}\ud s.
+\end{equation}
+So we have
+\begin{equation}
+\norm{\wt{U}(t)-U(t)}\le \int_{0}^{t} \norm{[e^{-\I s H_1},H_2]} \ud s.
+\label{eqn:U_Trotter1bound_1}
+\end{equation}
+
+Now consider $G(t)=[e^{-\I t H_1},H_2]e^{\I t H_1}=e^{-\I t H_1}H_2e^{\I t H_1}-H_2$, which satisfies $G(0)=0$ and 
+\begin{equation}
+\I\partial_t G(t)=e^{-\I t H_1}[H_1,H_2]e^{+\I t H_1}.
+\end{equation}
+Hence
+\begin{equation}
+\norm{[e^{-\I t H_1},H_2]}=\norm{G(t)}\le t\norm{[H_1,H_2]}.
+\end{equation}
+Plugging this back to \cref{eqn:U_Trotter1bound_1}, we have
+\begin{equation}
+\norm{\wt{U}(t)-U(t)}\le \int_0^t s\norm{[H_1,H_2]} \ud s\le \frac{t^2}{2}\norm{[H_1,H_2]}\le t^2\nu^2.
+\end{equation}
+In the last equality, we have used the relation $\norm{[H_1,H_2]}\le 2\nu^2$ with $\nu=\max\{\norm{H_1},\norm{H_2}\}$.
+Therefore \cref{eqn:trotter_coarse_error} can be replaced by a sharper inequality
+\begin{equation}
+\norm{e^{-\I \Delta t H}-e^{-\I \Delta t H_1}e^{-\I \Delta t H_2}}\le \frac{\Delta t^2}{2}\norm{[H_1,H_2]}\le (\Delta t)^2\nu^2.
+\label{eqn:trotter_sharp_error}
+\end{equation}
+Here the first inequality is called the commutator norm error estimate, and the second inequality the operator norm error estimate.
+
+For the transverse field Ising model with nearest neighbor interaction, we have $\norm{H_1},\norm{H_2}=\Or(n)$, and hence $\nu^2=\Or(n^2)$.
+On the other hand, since $[Z_iZ_j,X_k]\ne 0$ only if $k=i$ or $k=j$, the commutator bound satisfies $\norm{[H_1,H_2]}=\Or(n)$.
+Therefore to reach precision $\epsilon$, the scaling of the total number of time steps $L$ with respect to the system size is $\Or(n^2/\epsilon)$ according to the estimate based on the operator norm, but is only $\Or(n/\epsilon)$ according to that based on the commutator norm.
+
+For the particle in a potential, for simplicity consider $d=1$ and the domain $\Omega=[0,1]$ is discretized using a uniform grid of size $N$. 
+For smooth and bounded potential, we have $\norm{H_1}=\Or(N^2)$, and $\norm{V}=\Or(1)$.
+Therefore the operator norm bound gives $\nu^2=\Or(N^4)$. 
+This is too pessimistic. Reexamining the second inequality of \cref{eqn:trotter_sharp_error} shows that in this case, the error bound should be $\Or((\Delta t)^2\nu)$ instead of $(\Delta t)^2\nu^2$. So according to the operator norm error estimate, we have $L=\Or(N^2/\epsilon)$. 
+On the other hand, in the continuous space, for any smooth function $\psi(r)$, we have
+\begin{equation}
+[H_1,H_2]\psi=\left[-\frac{\ud^2}{\ud r^2},V\right]\psi=-V''\psi-V'\psi'.
+\end{equation}
+So 
+\begin{equation}
+\norm{[H_1,H_2]\psi}\le \norm{V''}+\norm{V'}\norm{\psi'}=\Or(N).
+\end{equation}
+Here we have used that $\norm{V'}=\norm{V''}=\Or(1)$, and $\norm{\psi'}=\Or(N)$ in the worst case scenario.
+Therefore $\norm{[H_1,H_2]}=\Or(N)$, and we obtain a significantly improved estimate $L=\Or(N/\epsilon)$ according to the commutator norm.
+
+The commutator scaling of the Trotter error is an important feature of the method. We refer readers to~\cite{JahnkeLubich2000} for analysis of the second order Trotter method, and~\cite{Thalhammer2008,ChildsSuTranEtAl2021} for the analysis of the commutator scaling of high order Trotter methods.
+
+
+\begin{rem}[Vector norm bound]
+The Hamiltonian simulation problem of interest in practice often concerns the solution with particular types of initial conditions, instead of arbitrary initial conditions.
+Therefore the operator norm bound in \cref{eqn:trotter_sharp_error} can still be too loose. 
+Taking the initial condition into account, we readily obtain
+\begin{equation}
+\norm{e^{-\I \Delta t H}\psi(0)-e^{-\I \Delta t H_1}e^{-\I \Delta t H_2}\psi(0)}\le \frac{\Delta t^2}{2}\max_{0\le s\le \Delta t}\norm{[H_1,H_2]\psi(s)}.
+\end{equation}
+For the example of the particle in a potential, we have
+\begin{equation}
+\max_{0\le s\le \Delta t}\norm{[H_1,H_2]\psi(s)}\le \norm{V''}+\norm{V'}\max_{0\le s\le \Delta t}\norm{\psi'(s)}. 
+\end{equation}
+Therefore if we are given the \emph{a priori} knowledge that $\max_{0\le s\le t}\norm{\psi'(s)}=\Or(1)$, we may even have $L=\Or(\epsilon^{-1})$, i.e., the number of time steps is independent of $N$.
+\end{rem}
+
+
+\vspace{2em}
+
+
+\begin{exer}
+Consider the Hamiltonian simulation problem for $H = H_1 + H_2 + H_3$. Show that the first order Trotter formula
+\begin{equation*}
+    \wt{U}(t) = e^{-\I t H_1} e^{-\I t H_2} e^{-\I t H_3}
+\end{equation*}
+has a commutator type error bound.
+\end{exer}
+
+\begin{exer}
+Consider the time-dependent Hamiltonian simulation problem for the following controlled Hamiltonian
+\[
+H(t) = a(t) H_1 + b(t) H_2,
+\]
+where $a(t)$ and $b(t)$ are smooth functions bounded together with all derivatives. We focus on the following Trotter type splitting, defined as
+    \begin{equation*}
+    \wt{U}(t) :=   \wt{U}(t_{n}, t_{n-1}) \cdots \wt{U}(t_1, t_0), \quad
+        \wt{U}(t_{j+1}, t_j) = e^{-\I \Delta t a(t_j) H_1} e^{-\I \Delta t b(t_j) H_2},
+    \end{equation*}
+    where the intervals $[t_j, t_{j+1}]$ are equidistant and of length $\Delta t$ on the interval $[0, t]$ with $t_n = t$. Show that this method has first-order accuracy, but does \textit{not} exhibit a commutator type error bound in general.
+\end{exer}
+

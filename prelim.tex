@@ -1,0 +1,1037 @@
+\chapter{Preliminaries of quantum computation}
+
+\section{Postulates of quantum mechanics}\label{sec:postulate}
+
+We introduce the four main postulates of quantum mechanics related to this course. 
+For more details, we refer readers to \cite[Section 2.2]{NielsenChuang2000}.
+All postulates concern closed quantum systems (i.e., systems isolated from environments) only.
+
+\subsection{State space postulate}
+
+The set of all quantum states of a quantum system forms a complex vector space with inner product structure (i.e., it is a Hilbert space, denoted by $\mc{H}$), called the state space. If the state space $\mc{H}$ is finite dimensional, it is isomorphic to some $\CC^N$, written as $\mc{H}\cong \CC^N$. Without loss of generality we may simply take $\mc{H}=\CC^N$. We always assume $N=2^n$ for some non-negative integer $n$, often called the number of quantum bits (or qubits). A quantum state $\psi\in\CC^N$ can be expressed in terms of its components as
+\begin{equation}
+\psi=\begin{pmatrix}
+\psi_0\\ \psi_1 \\ \vdots \\ \psi_{N-1}
+\end{pmatrix}.
+ \quad 
+\end{equation}
+Its Hermitian conjugate is 
+\begin{equation}
+\psi^{\dag}=\begin{pmatrix}
+\conj{\psi}_0& \conj{\psi}_1 & \cdots & \conj{\psi}_{N-1}
+\end{pmatrix},
+\end{equation}
+where $\conj{c}$ is the complex conjugation of $c\in \CC$. We also use the Dirac notation, which uses $\ket{\psi}$ to denote a quantum state, $\bra{\psi}$ to denote its Hermitian conjugation $\psi^{\dag}$,
+and the inner product
+\begin{equation}
+\braket{\psi|\varphi}:=\braket{\psi,\varphi}=\sum_{i\in[N]} \conj{\psi}_i \varphi_i.
+\end{equation}
+Here $[N]=\set{0,\ldots,N-1}$. Let $\{\ket{i}\}$ be the standard basis of $\CC^N$. The $i$-th entry of $\psi$ can be written as an inner product
+$\psi_i=\braket{i|\psi}$. 
+Then $\ket{\psi}\bra{\varphi}$ should be interpreted as an outer product, with $(i,j)$-th matrix element given by
+\begin{equation}
+\braket{i|(\ket{\psi}\bra{\varphi})|j}=\braket{i|\psi}\braket{\varphi|j}=\psi_i \conj{\varphi}_j.
+\end{equation}
+
+
+
+Two state vectors $\ket{\psi}$ and $c\ket{\psi}$ for some $0\ne c\in \CC$ always refer to the same physical state, i.e., $c$ has no observable effects. Hence without loss of generality we always assume $\ket{\psi}$ is normalized to be a unit vector, i.e., $\braket{\psi|\psi}=1$. Sometimes it is more convenient to write down an unnormalized state, which will be denoted by $\psi$ without the ket notation $\ket{\cdot}$. 
+Restricting to normalized state vectors, the complex number $c=e^{\I\theta}$ for some $\theta\in [0,2\pi)$, called the global phase factor. 
+
+\begin{exam}[Single qubit system]
+A (single) qubit corresponds to a state space $\mc{H}\cong\CC^2$. We also define
+\begin{equation}
+\ket{0}=\begin{pmatrix}
+1\\ 0
+\end{pmatrix}, \quad
+\ket{1}=
+\begin{pmatrix}
+0 \\ 1
+\end{pmatrix}.
+\end{equation}
+Since the state space of the spin-$\frac12$ system is also isomorphic to $\CC^2$, this is also called the single spin system, where $\ket{0},\ket{1}$ are referred to as the spin-up and spin-down state, respectively. 
+A general state vector in $\mc{H}$ takes the form 
+\begin{equation}
+\ket{\psi}=a\ket{0}+b\ket{1}=\begin{pmatrix}
+a\\ b
+\end{pmatrix}, \quad a,b\in\CC,
+\end{equation}
+and the normalization condition implies $\abs{a}^2+\abs{b}^2=1$.  
+So we may rewrite $\ket{\psi}$ as
+\begin{equation}
+\ket{\psi}=e^{\I \gamma}\left(\cos \frac{\theta}{2} \ket{0}+e^{\I \varphi} \sin \frac{\theta}{2} \ket{1}\right), \quad \theta,\varphi,\gamma\in\RR.
+\end{equation}
+If we ignore the irrelevant global phase $\gamma$, 
+the state is effectively
+\begin{equation}
+\ket{\psi}=\cos \frac{\theta}{2} \ket{0}+e^{\I \varphi} \sin \frac{\theta}{2} \ket{1}, \quad 0\le\theta<\pi,0\le\varphi<2\pi.
+\end{equation}
+So we may identify each single qubit quantum state with a unique point on the unit three-dimensional sphere (called the Bloch sphere) as
+\begin{equation}
+\va=(\sin\theta \cos\varphi, \sin\theta\sin\varphi,\cos\theta)^{\top}.
+\end{equation}
+\end{exam}
+
+\subsection{Quantum operator postulate}
+
+The evolution of a quantum state from $\ket{\psi}\to\ket{\psi'}\in \CC^N$ is always achieved via a unitary operator $U\in\CC^{N\times N}$, i.e.,
+\begin{equation}
+\ket{\psi'}=U\ket{\psi}, \quad U^{\dag} U=I_N.
+\end{equation}
+Here $U^{\dag}$ is the Hermitian conjugate of a matrix $U$, and $I_N$ is the $N$-dimensional identity matrix. When the dimension is apparent, we may also simply write $I\equiv I_N$. 
+In quantum computation, a unitary matrix is often referred to as a gate.
+
+\begin{exam}
+For a single qubit, the Pauli matrices are
+\begin{equation}
+\sigma_x=X=\begin{pmatrix}
+0 & 1\\
+1 & 0
+\end{pmatrix}
+, \quad 
+\sigma_y=Y=\begin{pmatrix}
+0 & -\I\\
+\I & 0
+\end{pmatrix}, \quad
+\sigma_z=Z=\begin{pmatrix}
+1 & 0\\
+0 & -1
+\end{pmatrix}.
+\end{equation}
+Together with the two-dimensional identity matrix, they form a basis of all linear operators on $\CC^2$. 
+\end{exam}
+
+Some other commonly used single qubit operators include, to name a few:
+
+\begin{itemize}
+
+\item Hadamard gate
+\begin{equation}
+H=\frac{1}{\sqrt{2}}\begin{pmatrix}
+1 & 1\\
+1 & -1
+\end{pmatrix}
+\end{equation}
+
+\item Phase gate
+\begin{equation}
+S=\begin{pmatrix}
+1 & 0\\
+0 & \I
+\end{pmatrix}
+\end{equation}
+
+\item $\mathrm{T}$ gate:
+\begin{equation}
+T=\begin{pmatrix}
+1 & 0\\
+0 & e^{\I\pi/4}
+\end{pmatrix}
+\end{equation}
+\end{itemize}
+When there are notational conflicts, we will use the roman font such as $\mathrm{H},\mathrm{X}$ for these single-qubit gates (one common scenario is to distinguish the Hadamard gate $\mathrm{H}$ from a Hamiltonian $H$). An operator acting on an $n$-qubit quantum state space is  called an $n$-qubit operator.
+
+Starting from an initial quantum state $\ket{\psi(0)}$, the quantum state can evolve in time, which gives a single parameter family of quantum states denoted by $\{\ket{\psi(t)}\}$. These quantum states are related to each other via a quantum evolution operator $U$:
+\begin{equation}
+\psi(t_2)=U(t_2,t_1)\psi(t_1),
+\end{equation}
+where $U(t_2,t_1)$ is unitary for any given $t_1,t_2$. Here $t_2>t_1$ refers to quantum evolution forward in time, $t_2<t_1$ refers to quantum evolution backward in time, and $U(t_1,t_1)=I$ for any $t_1$. 
+
+The quantum evolution under a time-independent Hamiltonian $H$ satisfies the time-independent Schr\"odinger equation
+\begin{equation}
+\I \partial_t\ket{\psi(t)}=H\ket{\psi(t)}.
+\end{equation}
+Here $H=H^{\dag}$ is a Hermitian matrix. The corresponding time evolution operator is
+\begin{equation}
+U(t_2,t_1)=e^{-\I H(t_2-t_1)}, \quad \forall t_1,t_2.
+\end{equation}
+In particular, $U(t_2,t_1)=U(t_2-t_1,0)$. 
+
+On the other hand, for any unitary matrix $U$, we can always find a Hermitian matrix $H$ such that $U=e^{\I H}$ (\cref{exer:unitary}).
+
+\begin{exam}
+Let the Hamiltonian $H$ be the Pauli-X gate. Then 
+\begin{equation}
+U(t,0)=e^{-\I Xt}=
+\begin{pmatrix}
+\cos t & -\I \sin t\\
+-\I \sin t & \cos t
+\end{pmatrix}=(\cos t)I-\I X (\sin t).
+\end{equation}
+Starting from an initial state $\ket{\psi(0)}=\ket{0}$, after time $t=\pi/2$, the state evolves into $\ket{\psi(\pi/2)}=-\I \ket{1}$, i.e., the $\ket{1}$ state (up to a global phase factor).
+\end{exam}
+
+\subsection{Quantum measurement postulate}
+
+Without loss of generality, we only discuss a special type of quantum measurements called the projective measurement. 
+For more general types of quantum measurements, see~\cite[Section 2.2.3]{NielsenChuang2000}.
+All quantum measurements expressed as a positive operator-valued measure (POVM) can be expressed in terms of projective measurements in an enlarged Hilbert space via the Naimark dilation theorem.
+
+In a finite dimensional setting, a quantum observable always corresponds to a Hermitian matrix $M$, which has the spectral decomposition
+\begin{equation}
+M=\sum_{m} \lambda_m P_m.
+  \label{eqn:M_observable}
+\end{equation}
+Here $\lambda_m\in\RR$ are the eigenvalues of $M$, and $P_m$ is the projection operator onto the eigenspace associated with $\lambda_m$, i.e., $P_m^2=P_m$. 
+
+When a quantum state $\ket{\psi}$ is measured by a quantum observable $M$, the outcome of the measurement is always an eigenvalue $\lambda_m$, with probability 
+\begin{equation}
+p_m=\braket{\psi|P_m|\psi}.
+\end{equation}
+After the measurement, the quantum state becomes
+\begin{equation}
+\ket{\psi}\to \frac{P_m \ket{\psi}}{\sqrt{p_m}}
+\end{equation} 
+Note that this is not a unitary process!
+
+In order to evaluate the expectation value of a quantum observable $M$, we first use  the resolution of identity: 
+\begin{equation}
+\sum_{m} P_m=I.
+\end{equation}
+This implies the normalization condition,
+\begin{equation}
+\sum_{m} p_m=\sum_{m} \braket{\psi|P_m|\psi}=\braket{\psi|\psi}=1.
+\end{equation}
+Together with $p_m\ge 0$, we find that $\{p_m\}$ is indeed a probability distribution.
+
+
+The expectation value of the measurement outcome is
+\begin{equation}
+\EE_{\psi}(M)=\sum_{m} \lambda_m p_m=\sum_{m} \lambda_m \braket{\psi|P_m|\psi}=\Braket{\psi|\left(\sum_{m} \lambda_m P_m \right)|\psi}=\braket{\psi|M|\psi}.
+\end{equation}
+
+\begin{exam}
+Again let $M=X$. From the spectral decomposition of $X$:
+\begin{equation}
+X\ket{\pm}=\lambda_{\pm}\ket{\pm},
+\end{equation}
+where $\ket{\pm}:=\frac{1}{\sqrt{2}}(\ket{0}\pm\ket{1}), \quad \lambda_{\pm}=\pm 1$, we obtain the eigendecomposition
+\begin{equation}\label{eqn:X_spectral}
+M=X=\ket{+}\bra{+}-\ket{-}\bra{-}.
+\end{equation}
+Consider a quantum state $\ket{\psi}=\ket{0}=\frac{1}{\sqrt{2}}(\ket{+}+\ket{-})$, then
+\begin{equation}
+\braket{\psi|P_{+}|\psi}=\braket{\psi|P_{-}|\psi}=\frac12.
+\end{equation}
+Therefore the expectation value of the measurement is $\braket{\psi|M|\psi}=0.$
+\end{exam}
+
+\subsection{Tensor product postulate}
+
+For a quantum state consists of $m$ components with state spaces $\{\mc{H}_i\}_{i=0}^{m-1}$, the state space is their tensor products denoted by $\mc{H}=\otimes_{i=0}^{m-1} \mc{H}_i$. Let $\ket{\psi_i}$ be a state vector in $\mc{H}_i$, then 
+\begin{equation}
+\ket{\psi}=\ket{\psi_0}\otimes\cdots\otimes\ket{\psi_{m-1}}
+\end{equation}
+in $\mc{H}$. However, not all quantum states in $\mc{H}$ can be written in the tensor product form above. Let $\{\ket{e^{(i)}_j}\}_{j\in [N_i]}$ be the basis of $\mc{H}_i$, then a general state vector in $\mc{H}$ takes the form
+\begin{equation}
+\ket{\psi}=\sum_{j_0\in[N_0],\ldots, j_{m-1}\in [N_{m-1}]} \psi_{j_0\cdots j_{m-1}} \ket{e^{(0)}_{j_0}}\otimes\cdots\otimes \ket{e^{(m-1)}_{j_{m-1}}}.
+\label{eqn:tensor_component}
+\end{equation}
+Here $\psi_{j_0\cdots j_{m-1}}\in\CC$ is an entry of a $m$-way tensor, and the dimension of $\mc{H}$ is therefore $\prod_{i\in[m]} N_i$.
+
+The state space of $n$-qubits is $\mc{H}=(\CC^2)^{\otimes n}\cong \CC^{2^n}$, rather than $\CC^{2n}$. We also use the notation
+\begin{equation}
+\ket{01}\equiv\ket{0,1}\equiv\ket{0}\ket{1}\equiv\ket{0}\otimes\ket{1}, \quad \ket{0^{\otimes n}}=\ket{0}^{\otimes n}. 
+\end{equation}
+Furthermore, $x\in\{0,1\}^n$ is called a classical bit-string, and $\{\ket{x}|x\in\{0,1\}^n\}$ is called the computational basis of $\CC^{2^n}$.
+
+\begin{exam}[Two qubit system] The state space is $\mc{H}=(\CC^2)^{\otimes 2}\cong \CC^{4}$. The standard basis is (row-major order, i.e., last index is the fastest changing one)
+\begin{equation}
+\ket{00}=
+\begin{pmatrix}
+1\\ 0 \\ 0 \\ 0
+\end{pmatrix}, \quad
+\ket{01}=
+\begin{pmatrix}
+0\\ 1 \\ 0 \\ 0
+\end{pmatrix}, \quad
+\ket{10}=
+\begin{pmatrix}
+0\\ 0 \\ 1 \\ 0
+\end{pmatrix}, \quad
+\ket{11}=
+\begin{pmatrix}
+0\\ 0 \\ 0 \\ 1
+\end{pmatrix}.
+\end{equation}
+
+The Bell state (also called the EPR pair) is defined to be
+\begin{equation}
+\ket{\psi}=\frac{1}{\sqrt{2}}(\ket{00}+\ket{11})=\frac{1}{\sqrt{2}}
+\begin{pmatrix}
+1 \\ 0 \\ 0 \\ 1
+\end{pmatrix},
+\label{eqn:bell_state}
+\end{equation}
+which cannot be written as any product state $\ket{a}\otimes\ket{b}$ (\cref{exer:bell}).
+
+There are many important quantum operators on the two-qubit quantum system. One of them is the CNOT gate, with matrix representation
+\begin{equation}
+\opr{CNOT}=\begin{pmatrix}
+{1} & {0} & {0} & {0} \\ 
+{0} & {1} & {0} & {0} \\ 
+{0} & {0} & {0} & {1} \\ 
+{0} & {0} & {1} & {0}
+\end{pmatrix}.
+\end{equation}
+In other words, when acting on the standard basis, we have
+\begin{equation}
+\opr{CNOT}\begin{cases}
+\ket{00}&=\ket{00}\\
+\ket{01}&=\ket{01}\\
+\ket{10}&=\ket{11}\\
+\ket{11}&=\ket{10}\\
+\end{cases}.
+\end{equation}
+
+This can be compactly written as
+\begin{equation}
+\opr{CNOT}\ket{a}\ket{b}=\ket{a}\ket{a\oplus b}.
+\end{equation}
+Here $a\oplus b=(a+b)\mod 2$ is the ``exclusive or'' (XOR) operation.
+\end{exam}
+
+\begin{exam}[Multi-qubit Pauli operators]
+For a $n$-qubit quantum system, the Pauli operator acting on the $i$-th qubit is denoted by $P_i$ ($P=X,Y,Z$). For instance
+\begin{equation}
+X_i:=I^{\otimes (i-1)}\otimes X\otimes I^{\otimes (n-i)}.
+\end{equation} 
+\end{exam}
+
+\section{Density operator}
+
+So far all quantum states encountered can be described by a single $\ket{\psi}\in\mc{H}$, called the pure state. More generally, if a quantum system is in one of a number of states $\ket{\psi_i}$ with respective probabilities $p_i$, then $\{p_i, \ket{\psi_i}\}$ is an ensemble of pure states. The density operator of the quantum system is 
+\begin{equation}
+\rho:=\sum_i p_i \ket{\psi_i}\bra{\psi_i}.
+\end{equation}
+For a pure state $\ket{\psi}$, we have
+\begin{equation}
+\rho=\ket{\psi}\bra{\psi}
+\end{equation}
+is a rank-$1$ matrix.
+
+Consider a quantum observable in \cref{eqn:M_observable} associated with the projectors $\{P_m\}$. For a pure state, it can be verified that the probability result of returning $\lambda_m$, and the expectation value of the measurement are respectively,
+\begin{equation}
+p(m)=\Tr[P_m\rho], \quad \EE_{\rho}[M]=\Tr[M \rho]
+\label{eqn:measure_rho}
+\end{equation}
+The expression \eqref{eqn:measure_rho} also holds for general density operators $\rho$.
+
+An operator $\rho$ is the density operator associated to some ensemble $\{p_i, \ket{\psi_i}\}$ if and only if (1) $\Tr \rho=1$ (2) $\rho \succeq 0$, i.e., $\rho$ is a positive semidefinite matrix (also called a positive operator). All postulates in \cref{sec:postulate} can be stated in terms of density operators (see \cite[Section 2.4.2]{NielsenChuang2000}). Note that a pure state satisfies $\rho^2=\rho$. In general we have $\rho^2\preceq \rho$. If $\rho^2\prec \rho$, then $\rho$ is called (the density operator of) a mixed state. Furthermore, an ensemble of admissible density operators is also a density operator.
+
+A quantum operator $U$ that transforms $\ket{\psi}$ to $U\ket{\psi}$ also transforms the density operator according to
+\begin{equation}
+  \rho=\sum_i p_i \ket{\psi_i}\bra{\psi_i}\xrightarrow{U}
+\sum_i p_i U\ket{\psi_i}\bra{\psi_i}U^{\dag} = U\rho U^{\dag}:=U[\rho].
+\end{equation}
+However, not all quantum operations on density operators need to be unitary! 
+See \cite[Section 8.2]{NielsenChuang2000} for more general discussions on quantum operations.
+
+Most of the discussions in this course will be restricted to pure states, and unitary quantum operations. 
+Even in this restricted setting, the density operator formalism can still be convenient, particularly for describing a subsystem of a composite quantum system. 
+Consider a quantum system of $(n+m)$-qubits,
+partitioned into a subsystem $A$ with $n$ qubits (the state space is $\mc{H}_A=\CC^{2^n}$) and a subsystem $B$ with $m$ qubits (the state space is $\mc{H}_B=\CC^{2^m}$) respectively. 
+The quantum state is a pure state $\ket{\psi}\in \CC^{2^{n+m}}$ with density operator $\rho_{AB}$. 
+Let $\ket{a_1},\ket{a_2}$ be two state vectors in $\mc{H}_A$, and $\ket{b_1},\ket{b_2}$ be two state vectors in $\mc{H}_B$. 
+Then the partial trace over system $B$ is defined as
+\begin{equation}
+  \Tr_{B}[\ket{a_1}\bra{a_2}\otimes \ket{b_1}\bra{b_2}] = \ket{a_1}\bra{a_2} \Tr[\ket{b_1}\bra{b_2}] = \ket{a_1}\bra{a_2} \braket{b_2|b_1}.
+  \label{eqn:partial_trace}
+\end{equation}
+Since we can expand the density operator $\rho_{AB}$ in terms of the basis of $\mc{H}_A,\mc{H}_B$, the definition of \eqref{eqn:partial_trace} can be extended to define
+the reduced density operator for the subsystem $A$
+\begin{equation}
+  \rho_{A} = \Tr_{B}[\rho_{AB}].
+  \label{eqn:reduced_density_operator}
+\end{equation}
+The reduced density operator for the subsystem $B$ can be similarly defined.  The reduced density operators $\rho_A,\rho_B$ are generally mixed states. 
+
+\begin{exam}[Reduced density operator of tensor product states]
+If $\rho_{AB}=\rho_1\otimes \rho_2$, then 
+\begin{equation}
+\Tr_{B}[\rho_{AB}] = \rho_1, \quad  \Tr_{A}[\rho_{AB}] = \rho_2.
+\end{equation}
+\end{exam}
+
+If a quantum observable is defined only on the subsystem $A$, i.e., $M=M_A\otimes I$ where $M_A$ has the decomposition \eqref{eqn:M_observable}, 
+then the success probability of returning $\lambda_m$, and the expectation value are respectively
+\begin{equation}
+  p(m)=\Tr[(P_m\otimes I) \rho] = \Tr[P_m \Tr_B[\rho]] = \Tr[P_m \rho_A], \quad  \EE_{\rho}[M]=\Tr[(M_A\otimes I) \rho] = \Tr[M_A \rho_A].
+  \label{eqn:measure_reduced_density}
+\end{equation}
+
+
+\section{Quantum circuit}
+
+Nearly all quantum algorithms operate on multi-qubit quantum systems. When quantum operators operate on two or more qubits, writing down quantum states in terms of its components as in \cref{eqn:tensor_component} quickly becomes cumbersome. The quantum circuit language offers a graphical and compact manner for writing down the procedure of applying a sequence of quantum operators to a quantum state. For more details see \cite[Section 4.2, 4.3]{NielsenChuang2000}.
+
+In the quantum circuit language, time flows from the left to right, i.e., the input quantum state appears on the left, and the quantum operator appears on the right, and each ``wire'' represents a qubit i.e.,
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{\psi}$} & \gate{U}   & \rstick{$U\ket{\psi}$} \qw 
+\end{quantikz}
+\end{center}
+
+Here are a few examples:
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{0}$} & \gate{X}   & \rstick{$\ket{1}$} \qw 
+\end{quantikz}
+\quad
+\begin{quantikz}
+ \lstick{$\ket{1}$} & \gate{Z}   &  \rstick{$-\ket{1}$} \qw
+\end{quantikz}
+\quad
+\begin{quantikz}
+ \lstick{$\ket{0}$} & \gate{H}   & \rstick{$\ket{+}$} \qw 
+\end{quantikz}
+\end{center}
+which is a graphical way of writing
+\begin{equation}
+X\ket{0}=\ket{1}, \quad Z\ket{1}=-\ket{1}, \quad H\ket{0}=\ket{+}.
+\end{equation}
+The relation between these states can be expressed in terms of the following diagram
+\begin{equation}
+\begin{tikzcd}[column sep=3em,row sep=3em]
+\ket{0} \arrow{r}{X} \arrow[swap]{d}{H} & \ket{1} \arrow{d}{H} \\
+\ket{+} \arrow{r}{Z} & \ket{-}
+\end{tikzcd}
+\end{equation}
+
+Also verify that
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{0}$} & \gate{X}   & \rstick{$\ket{1}$} \qw \\
+ \lstick{$\ket{0}$} & \qw   & \rstick{$\ket{0}$} \qw 
+\end{quantikz}
+\end{center}
+which is a graphical way of writing
+\begin{equation}
+(X\otimes I)\ket{00}=\ket{10}.
+\end{equation}
+Note that the input state can be general, and in particular does not need to be a product state. For example, if the input is a Bell state \eqref{eqn:bell_state}, we just apply the quantum operator to $\ket{00}$ and $\ket{11}$,  respectively and multiply the results by $1/\sqrt{2}$ and add together.
+To distinguish with other symbols, these single qubit gates may be either written as $X,Y,Z,H$ or (using the roman font) $\mathrm{X,Y,Z,H}$.
+
+The quantum circuit for the CNOT gate is
+
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{a}$}    & \ctrl{1}   & \rstick{$\ket{a}$} \qw    \\
+ \lstick{$\ket{b}$}    & \targ{}      & \rstick{$\ket{a\oplus b}$}  \qw 
+\end{quantikz}
+\end{center}
+Here the ``dot'' means that the quantum gate connected to the dot only becomes active if the state of the qubit $0$ (called the control qubit) is $a=1$. 
+This justifies the name of the CNOT gate (controlled NOT).
+
+Similarly, 
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{a}$}    & \ctrl{1}   & \rstick{$\ket{a}$} \qw    \\
+ \lstick{$\ket{b}$}    & \gate{U}      & \rstick{$U^{a}\ket{b}$}  \qw 
+\end{quantikz}
+\end{center}
+is the controlled $U$ gate for some unitary $U$. Here $U^a=I$ if $a=0$. The CNOT gate can be obtained by setting $U=X$.
+
+Another commonly used two-qubit gate is the SWAP gate, which swaps the state in the $0$-th and the $1$-st qubits.
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{a}$}    & \swap{1}   &  \rstick{$\ket{b}$} \qw  \\
+ \lstick{$\ket{b}$}    & \targX{}      & \rstick{$\ket{a}$} \qw  
+\end{quantikz}
+\end{center}
+
+Quantum operators applied to multiple qubits can be written in a similar manner:
+\begin{center}
+\begin{quantikz}
+ \lstick{qubit 0: $\ket{0}$}  & \gate[4]{U} & \qw   \\
+ \lstick{qubit 1: $\ket{0}$}  &             & \qw   \\
+ \lstick{qubit 2: $\ket{0}$}  &             & \qw   \\
+ \lstick{qubit 3: $\ket{0}$}  &             & \qw   
+\end{quantikz}
+\end{center}
+For a multi-qubit quantum circuit, unless stated otherwise, the first qubit will be referred to as the qubit 0, and the second qubit as the qubit 1, etc.
+
+When the context is clear, we may also use a more compact notation for the multi-qubit quantum operators:
+\begin{displaymath}
+\begin{quantikz}
+ \lstick{$\ket{0}^{\otimes{4}}$}  & \gate{U} \qwb & \qw    
+\end{quantikz}
+\Leftrightarrow
+\begin{quantikz}
+ \lstick{$\ket{0}^{\otimes{4}}$}  & \gate{U} \qwbundle[alternate]{} & \qwbundle[alternate]{}
+\end{quantikz}
+\Leftrightarrow
+\begin{quantikz}
+ \lstick{$\ket{0}^{\otimes{4}}$}  & \gate{U}  & \qw    
+\end{quantikz}
+\end{displaymath}
+One useful multiple qubit gate is the Toffoli gate (or controlled-controlled-NOT, CCNOT gate).
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{a}$}    & \ctrl{1}   & \rstick{$\ket{a}$} \qw    \\
+ \lstick{$\ket{b}$}    & \ctrl{1}   & \rstick{$\ket{b}$} \qw    \\ 
+ \lstick{$\ket{c}$}    & \targ{}      & \rstick{$\ket{(ab)\oplus c}$}  \qw
+\end{quantikz}
+\end{center}
+We may also want to apply a $n$-qubit unitary $U$ only when certain conditions are met
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{1}$}    & \ctrl{1}   & \rstick{$\ket{1}$} \qw    \\
+ \lstick{$\ket{1}$}    & \ctrl{1}   & \rstick{$\ket{1}$} \qw    \\ 
+ \lstick{$\ket{0}$}    & \octrl{1}  & \rstick{$\ket{0}$} \qw    \\ 
+ \lstick{$\ket{x}$}    & \gate{U} \qwb  & \rstick{$U\ket{x}$}  \qw
+\end{quantikz}
+\end{center}
+where the empty circle means that the gate being controlled only becomes active when the value of the control qubit is $0$. 
+This can be used to write down the quantum ``if'' statements, i.e., when the qubits $0,1$ are at the $\ket{1}$ state and the qubit $2$ is at the $\ket{0}$ state, then apply $U$ to $\ket{x}$. 
+
+A set of qubits is often called a register (or quantum variable). 
+For example, in the picture above, the main quantum state of interest (an $n$ qubit quantum state $\ket{x}$) is called the system register. The first $3$ qubits can be called the control register.
+
+
+
+\section{Copy operation and no-cloning theorem}
+
+One of the most striking early results of quantum computation is the no-cloning theorem (by Wootters and Zurek, as well as Dieks in 1982), which forbids generic quantum copy operations (see also \cite[Section 12.1]{NielsenChuang2000}). The no-deleting theorem is a consequence of linearity of quantum mechanics.
+
+Assume there is a unitary operator $U$ that acts as the copy operations, i.e.,
+\begin{equation}
+  U\ket{x}\otimes\ket{s}=\ket{x}\otimes\ket{x},
+\end{equation}
+for any black-box state $x$, and a chosen target state $\ket{s}$ (e.g. $\ket{0^n}$). Then take two states $\ket{x_1},\ket{x_2}$, we have
+\begin{equation}
+  U\ket{x_1}\otimes\ket{s}=\ket{x_1}\otimes\ket{x_1}, \quad U\ket{x_2}\otimes\ket{s}=\ket{x_2}\otimes\ket{x_2}.
+\end{equation}
+Taking the inner product of the two equations, we have
+\begin{equation}
+\braket{x_1|x_2}=\braket{x_1|x_2}^2,
+\end{equation}
+which implies $\braket{x_1|x_2}=0$ or $1$. When $\braket{x_1|x_2}=1$, $\ket{x_1},\ket{x_2}$ refer to the same physical state.
+Therefore a cloning operator $U$ can at most copy states which are orthogonal to each other, and a general quantum copy operation is impossible.
+
+Given the ubiquity of the copy operation in scientific computing like $y=x$, the no-cloning theorem has profound implications. 
+For instance, all classical iterative algorithms for solving linear systems require storing some intermediate variables. 
+This operation is generally not possible, or at least cannot be efficiently performed.
+
+There are two notable exceptions to the range of applications of the no-cloning theorem. 
+The first is that we know how a quantum state is prepared, i.e., $\ket{x}=U_x\ket{s}$ for a \emph{known} unitary $U_x$ and some $\ket{s}$. 
+Then we can of course copy this specific vector $\ket{x}$ via 
+\begin{equation}
+(I\otimes U_x)\ket{x}\otimes\ket{s}=\ket{x}\otimes\ket{x}.
+\end{equation}
+
+The second is the copying of classical information. This is an application of the CNOT gate.
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{x}$}    & \ctrl{1}   & \rstick{$\ket{x}$} \qw    \\
+ \lstick{$\ket{0}$}    & \targ{}      & \rstick{$\ket{x}$}  \qw 
+\end{quantikz}
+\end{center}
+i.e.,
+\begin{equation}
+\opr{CNOT}\ket{x,0}=\ket{x,x}, \quad x\in\{0,1\}.
+\end{equation}
+The same principle applies to copying classical information from multiple qubits. \cref{fig:multiqubit_copy} gives an example of copying the classical information stored in 3 bits.
+\begin{figure}[H]
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{x_1}$}    & \ctrl{3}   & \qw & \qw & \rstick{$\ket{x_1}$} \qw    \\
+ \lstick{$\ket{x_2}$}    & \qw & \ctrl{3}   & \qw & \rstick{$\ket{x_2}$} \qw    \\
+ \lstick{$\ket{x_3}$}    & \qw & \qw & \ctrl{3}   & \rstick{$\ket{x_3}$} \qw    \\
+ \lstick{$\ket{0}$}      & \targ{}    & \qw & \qw & \rstick{$\ket{x_1}$}  \qw    \\
+ \lstick{$\ket{0}$}    & \qw & \targ{}   & \qw & \rstick{$\ket{x_2}$} \qw    \\
+ \lstick{$\ket{0}$}    & \qw & \qw & \targ{}   & \rstick{$\ket{x_3}$} \qw    \\
+\end{quantikz}
+\end{center}
+\caption{Copying classical information using multi-qubit CNOT gates.}
+\label{fig:multiqubit_copy}
+\end{figure}
+  In general, a multi-qubit CNOT operation can be used to perform the classical copying operation in the computational basis. Note that in the circuit model, this can be implemented with a depth 1 circuit, since they all act on different qubits.
+
+\begin{exam}
+  Let us verify that the CNOT gate does not violate the no-cloning theorem, i.e., it cannot be used to copy a superposition of classical bits $\ket{x}=a\ket{0}+b\ket{1}$.
+  Direct calculation shows
+  \begin{equation}
+  \opr{CNOT}\ket{x}\otimes \ket{0}=a\ket{00}+b\ket{11} \ne \ket{x}\otimes \ket{x}.
+  \end{equation}
+  In particular, if $\ket{x}=\ket{+}$, then CNOT creates a Bell state. 
+  
+
+  \end{exam}
+
+The quantum no-cloning theorem implies that there does not exist a unitary $U$ that performs the deleting operation, which resets a black-box state $\ket{x}$ to $\ket{0^n}$. 
+This is because such a deleting unitary can be viewed as a copying operation
+\begin{equation}
+U \ket{0^n}\otimes\ket{x} = \ket{0^n}\otimes\ket{0^n}.
+\end{equation}
+Then take $\ket{x_1},\ket{x_2}$ that are orthogonal to each other, apply the deleting gate, and compute the inner products, we obtain
+\begin{equation}
+0=\braket{x_1|x_2}=\braket{0^n|0^n}=1,
+\end{equation}
+which is a contradiction.
+
+A more common way to express the no-deleting theorem is in terms of the time reversed dual of the no-cloning theorem:  in general, given two copies of some arbitrary quantum state, it is impossible to delete one of the copies.
+More specifically, there is no unitary $U$ performing the following operation using known states $\ket{s},\ket{s'}$,
+\begin{equation}\label{eqn:no_delete}
+U\ket{x}\ket{x}\ket{s}=\ket{x}\ket{0^n}\ket{s'}
+\end{equation}
+for an arbitrary unknown state $\ket{x}$ (\cref{exer:no_delete}).
+
+
+
+
+
+\section{Measurement}
+The quantum measurement applied to any qubit, by default, measures the outcome in the computational basis. 
+For example,
+\begin{center}
+\begin{quantikz}
+ \lstick{$\ket{0}$} & \gate{H}   & \meter{} 
+\end{quantikz}
+\end{center}
+outputs $0$ or $1$ each w.p. $1/2$. We may also measure some of the qubits in a multi-qubit system.
+\begin{equation}
+\begin{quantikz}
+ \lstick{$\ket{0}$}  & \gate[3]{U} & \meter{}    \\
+ \lstick{$\ket{0}$}  &             & \rstick[wires=2]{$\ket{\psi}$}\qw \\
+ \lstick{$\ket{0}$}  &             & \qw   
+\end{quantikz}
+\equiv
+\begin{quantikz}
+ \lstick{$\ket{0}$}  & \gate[2]{U} & \meter{}    \\
+ \lstick{$\ket{0}^{\otimes 2}$}  &             & \rstick{$\ket{\psi}$}\qw
+\end{quantikz}
+\end{equation}
+
+
+There are two important principles related to quantum measurements: the principle of deferred measurement, and the principle of implicit measurement. At a first glance, both principles may seem to be counterintuitive.
+
+The principle of deferred measurement states that measurement operations can always be moved from an intermediate stage of a quantum circuit to the end of the circuit. This is because even if a measurement is performed as an intermediate step in a quantum circuit, and the result of the measurement is used to conditionally control subsequent quantum gates, such classical controls can always be replaced by quantum controls, and the result of the quantum measurement is postponed to later.
+
+\begin{exam}[Deferring quantum measurements]
+  Consider the circuit
+\begin{center}
+\begin{quantikz}
+  \lstick{$\ket{0}$}    & \gate{H} & \meter{} & \cwbend{1} \\
+  \lstick{$\ket{0}$}    & \qw      & \qw      & \gate{X} & \qw
+\end{quantikz}
+\end{center}
+Here the double line denotes the classical control operation. 
+The outcome is that qubit $0$ has probability $1/2$ of outputting $0$, and the qubit $1$ is at state $\ket{0}$. 
+Qubit $0$ also has probability $1/2$ of outputting $1$, and the qubit $1$ is at state $\ket{1}$. 
+
+However, we may replace the classical control operation after the measurement by a quantum controlled $X$ (which is CNOT), and measure the qubit $0$ afterwards: 
+\begin{center}
+\begin{quantikz}
+  \lstick{$\ket{0}$}    & \gate{H} & \ctrl{1} & \meter{}  \\
+  \lstick{$\ket{0}$}    & \qw      & \targ{}  &  \qw
+\end{quantikz}
+\end{center}
+It can be verified that the result is the same. Note that CNOT acts as the classical copying operation. 
+So qubit $1$ really stores the classical information (i.e., in the computational basis) of qubit $0$. 
+\end{exam} 
+
+
+\begin{exam}[Deferred measurement requires extra qubits]
+The procedure of deferring quantum measurements using CNOTs is general, and important. Consider the following circuit: 
+\begin{center}
+\begin{quantikz}
+  \lstick{$\ket{0}$}    & \gate{H} & \meter{} & \gate{H} & \meter{}
+\end{quantikz}
+\end{center}
+The probability of obtaining $0,1$ is $1/2$, respectively. 
+However, if we simply ``defer'' the measurement to the end by removing the intermediate measurement, we obtain
+\begin{center}
+\begin{quantikz}
+  \lstick{$\ket{0}$}    & \gate{H} & \gate{H} & \meter{}
+\end{quantikz}
+\end{center}
+The result of the measurement is deterministically $0$!
+The correct way of deferring the intermediate quantum measurement is to introduce another qubit
+\begin{center}
+\begin{quantikz}
+  \lstick{$\ket{0}$}    & \gate{H} & \ctrl{1} & \gate{H} & \meter{}\\
+  \lstick{$\ket{0}$}    & \qw      & \targ{}  & \qw & \qw \\
+\end{quantikz}
+\end{center}
+Measuring the qubit $0$, we obtain $0$ or $1$ w.p. $1/2$, respectively.
+Hence when deferring quantum measurements, it is necessary to store the intermediate information in extra (ancilla) qubits, even if such information is not used afterwards.
+\end{exam}
+
+
+The principle of implicit measurements states that at the end of a quantum circuit, any unmeasured qubit may be assumed to be measured.
+More specifically, assume the quantum system consists of two subsystems $A$ and $B$. 
+If qubits $A$ are to be measured at the end of the circuits, the results of the measurements does not depend on whether the qubits $B$ are measured or not. 
+Recall from \cref{eqn:measure_reduced_density} that a measurement on the subsystem $A$ only depends on the reduced density matrix $\rho_A$.
+So we only need to show that $\rho_A$ does not depend on the measurement in $B$. 
+To see why this is the case, let $\{P_i\}$ be the projectors onto the computational basis of $B$. 
+Before the measurement, the density operator is $\rho$.
+If we measure the subsystem $B$, the resulting density operator is transformed into
+\begin{equation}\label{eqn:measure_rhoB}
+  \rho'=\sum_{i} (I\otimes P_i) \rho (I\otimes P_i).
+\end{equation}
+Then it can be verified that 
+\begin{equation}\label{eqn:measure_rhoB_rhoA}
+\rho'_A = \Tr_B[\rho']=\Tr_B\left[\rho \sum_i(I\otimes P_i)\right] = \Tr_B[\rho] = \rho_A.
+\end{equation}
+This proves the principle of implicit measurements.
+
+By definition, the output of all quantum algorithms must be obtained through measurements, and hence the measurement outcome is probabilistic in general.
+If the goal is to compute the expectation value of a quantum observable $M_A$ acting on a subsystem $A$, then its variance is
+\begin{equation}
+\opr{Var}_{\rho}[M_A]=\Tr[M_A^2 \rho_A] - (\Tr[M_A \rho_A])^2.
+\end{equation}
+The number of samples $\mc{N}$ needed to estimate $\Tr[M_A \rho_A]$ to \emph{additive} precision $\epsilon$ satisfies
+\begin{equation}
+\sqrt{\frac{\opr{Var}_{\rho}[M_A]}{\mc{N}}}\le \epsilon \gives \mc{N}\ge \frac{\opr{Var}_{\rho}[M_A]}{\epsilon^2},
+\end{equation}
+which only depends on $\rho_A$. 
+
+\begin{exam}[Estimating success probability on one qubit]\label{exam:prob_onequbit}
+Let $A$ be the single qubit to be measured in the computational basis, and we are interested in the accuracy in estimating the success probability of obtaining $1$, i.e., $p$. 
+This can be realized as an expectation value with $M_A=\ket{1}\bra{1}$, and $p=\Tr[M_A \rho_A]$.
+Note that $M_A^2=M_A$, then
+\begin{equation}
+ \opr{Var}_{\rho}[M_A] = p-p^2=p(1-p).
+\end{equation}
+Hence to estimate $p$ to \emph{additive} error $\epsilon$, the number of samples needed satisfies
+\begin{equation}
+\mc{N}\ge \frac{p(1-p)}{\epsilon^2}.
+\end{equation}
+Note that if $p$ is close to $0$ or $1$, the number of samples needed is also very small: 
+indeed, the outcome of the measurement becomes increasing deterministic in this case!
+
+If we are interested in estimating $p$ to \emph{multiplicative} accuracy $\epsilon$, then the number of samples is
+\begin{equation}
+\mc{N}\ge \frac{p(1-p)}{p^2\epsilon^2}=\frac{1-p}{p\epsilon^2},
+\end{equation}
+and the task becomes increasingly more difficult when $p$ approaches $0$. 
+\end{exam}
+
+\section{Linear error growth and Duhamel's principle}
+
+If a quantum algorithm denoted by a unitary $U$ can be decomposed into a series of simpler unitaries as $U=U_{K}\cdots U_1$, and if we can implement each $U_i$ to precision $\epsilon$, then what is the global error?
+We now introduce a simple technique connecting the local error with the global error. 
+In the context of quantum computation, this is often referred to as the ``hybrid argument''.
+
+\begin{prop}[Hybrid argument]
+Given unitaries $U_1,\wt{U}_1,\ldots, U_K,\wt{U}_K\in\CC^{N\times N}$ satisfying
+\begin{equation}
+\norm{U_i-\wt{U}_i}\le \epsilon, \quad \forall i=1,\ldots,K,
+\end{equation}
+we have
+\begin{equation}
+\norm{U_{K}\cdots U_1-\wt{U}_K \cdots \wt{U}_1}\le K \epsilon.
+\end{equation}
+\label{prop:hybridization_argument}
+\end{prop}
+\begin{proof}
+Use a telescoping series
+\begin{equation}
+\begin{split}
+&U_{K}\cdots U_1-\wt{U}_K \cdots \wt{U}_1\\
+=&(U_{K}\cdots U_2U_1-U_K \cdots U_2\wt{U}_1)+
+(U_{K}\cdots U_3 U_2\wt{U}_1-U_{K}\cdots U_3 \wt{U}_2 \wt{U}_1)+\cdots\\
+&+(U_K\wt{U}_{K-1} \cdots \wt{U}_1-\wt{U}_K\wt{U}_K \cdots \wt{U}_1)\\
+=& U_{K}\cdots U_2(U_1-\wt{U}_1)+U_{K}\cdots U_3(U_2-\wt{U}_2)+\cdots+(U_K-\wt{U}_K)\wt{U}_{K-1} \cdots \wt{U}_1.
+\end{split}
+\label{eqn:hybrid_telescope}
+\end{equation}
+Since all $U_i,\wt{U}_i$ are unitary matrices, we readily have
+\begin{equation}
+\norm{U_{K}\cdots U_1-\wt{U}_K \cdots \wt{U}_1}\le \sum_{i=1}^K \norm{U_i-\wt{U}_i}\le K\epsilon.
+\end{equation}
+\end{proof}
+
+In other words, if we can implement each local unitary to precision $\epsilon$, the global error grows at most \textit{linearly} with respect to the number of gates and is bounded by $K\epsilon$.
+The telescoping series \cref{eqn:hybrid_telescope}, as well as the hybrid argument can also be seen as a discrete analogue of the variation of constants method (also called Duhamel's principle).
+
+\begin{prop}[Duhamel's principle for Hamiltonian simulation]
+Let $U(t),\wt{U}(t)\in \CC^{N\times N}$ satisfy
+\begin{equation}
+\I \partial_t U(t)=H U(t), \quad \I \partial_t\wt{U}(t)=H\wt{U}(t)+B(t), \quad U(0)=\wt{U}(0)=I,
+\end{equation}
+where $H\in \CC^{N\times N}$ is a Hermitian matrix, and $B(t)\in \CC^{N\times N}$ is an arbitrary matrix. 
+Then
+\begin{equation}
+\wt{U}(t)=U(t)-\I\int_0^t U(t-s) B(s) \ud s,
+\label{eqn:duhamel}
+\end{equation}
+and
+\begin{equation}
+\norm{\wt{U}(t)-U(t)}\le \int_{0}^t \norm{B(s)}\ud s.
+\end{equation}
+\label{prop:duhamel}
+\end{prop}
+\begin{proof}
+Directly verify that \cref{eqn:duhamel} is the solution to the differential equation.
+\end{proof}
+As a special case, consider $B(t)=E(t)\wt{U}(t)$, then \cref{eqn:duhamel} becomes
+\begin{equation}
+\wt{U}(t)=U(t)-\I\int_0^t U(t-s) E(s) \wt{U}(s) \ud s,
+\end{equation}
+and
+\begin{equation}
+\norm{\wt{U}(t)-U(t)}\le \int_{0}^t \norm{E(s)}\ud s.
+\end{equation}
+This is a direct analogue of the hybrid argument in the continuous setting.
+
+\section{Universal gate sets and reversible computation}
+
+In classical computation, there are many universal gate sets, in the sense that any classical gate can be represented as a combination of gates from the set.
+For example, the NAND gate (``Not AND'') alone forms a universal gate set \cite[Section 3.1.2]{NielsenChuang2000}. The NOR gate (``Not OR'') is also a universal gate set.
+
+In the quantum setting, any unitary operator on $n$ qubits can be implemented using $1$- and $2$-qubit gates\cite[Section 4.5]{NielsenChuang2000}. 
+It is desirable to come up with a  set of discrete universal gates, but this means that we need to give up the notion that the unitary $U$ can be exactly represented. 
+Instead, a set of quantum gates $\mc{S}$ is universal if given any unitary operator $U$ and desired precision $\epsilon$, we can find $U_1,\ldots,U_m\in \mc{S}$ such that
+\begin{equation}
+  \norm{U-U_m U_{m-1} \cdots U_1} \le \epsilon.
+\end{equation}
+Here $\norm{A}=\sup_{\braket{\psi|\psi}=1} \norm{A\ket{\psi}}$ is the operator norm (also called the spectral norm) of $A$, and $\norm{\ket{\psi}}=\sqrt{\braket{\psi|\psi}}$ is the vector $2$-norm).  There are many possible choices of universal gate sets, e.g. $\{H,T,\opr{CNOT}\}$. Another universal gate set is $\{H,\opr{Toffoli}\}$, which only involves real numbers.
+
+Are some universal gate sets better than others? The Solovay-Kitaev theorem states that all choices of universal gate sets are asymptotically equivalent (see e.g. ~\cite[Chapter 2]{ChildsQuantumLec}):
+\begin{thm}[Solovay-Kitaev]
+  Let $\mc{S},\mc{T}$ be two universal gate sets that are closed under
+  inverses. Then any $m$-gate circuit using the gate set $\mc{S}$ can be implemented to
+  precision $\epsilon$ using a circuit of $\Or(m\cdot \polylog(m/\epsilon))$ gates from the gate set $\mc{T}$, 
+  and there is a classical algorithm for finding this circuit in time $\Or(m\cdot \polylog(m/\epsilon))$.
+  \label{thm:solovay_kitaev}
+\end{thm}
+
+
+Another natural question is about the computational power of quantum computers. 
+Perhaps surprisingly, it is very difficult to prove that quantum computer is \emph{more powerful than} classical computer. 
+But is quantum computer \emph{at least as powerful as} classical computers? 
+The answer is yes! 
+More specifically, any classical circuit can also be  asymptotically efficiently implemented using a quantum circuit.
+
+The proof rests on that the classical universal gate can be efficiently simulated using quantum circuits. 
+Note that this is not a straightforward process: NAND, and other classical gates (such as AND, OR etc.) are not reversible gates!
+Hence the first step is to perform classical computation with \emph{reversible} gates.
+More specifically, any irreversible classical gate $x\mapsto f(x)$ can be made into a reversible classical gate
+\begin{equation}
+(x,y)\mapsto (x,y\oplus f(x)).
+\label{eqn:reversible_classical}
+\end{equation}
+In particular, we have $(x,0)\mapsto (x,f(x))$ computed in a reversible way. The key idea is to store all intermediate steps of the computation (see \cite[Section 3.2.5]{NielsenChuang2000} for more details).
+
+On the quantum computer, storing all intermediate computational steps indefinitely creates two problems: (1) tremendous waste of quantum resources (2) the intermediate results stored in some extra qubits are still entangled to the quantum state of interest. So if the environments interfere with intermediate results, the quantum state of interest is also affected.
+
+Fortunately, both problems can be solved by a step called ``uncomputation''. In order to implement a Boolean function
+\(f :\{0,1\}^{n} \rightarrow\{0,1\}^{m}\), we assume there is an oracle
+\begin{equation}\ket{0^m}\ket{x}\mapsto \ket{f(x)}\ket{x},\end{equation}
+where \(\ket{0^m}\) comes from a \(m\)-qubit output register. The oracle
+is often further implemented with the help of a working register (a.k.a.
+``garbage'' register) such that
+\begin{equation}
+U_f:\ket{0^{w}}\ket{0^m}\ket{x}\mapsto \ket{g(x)}\ket{f(x)}\ket{x}.
+\end{equation}
+
+From the no-deleting theorem, there is no generic unitary operator
+that can set a black-box state to \(\ket{0^w}\). In order to
+set the working register back to \(\ket{0^w}\) while keeping the input and
+output state, we introduce yet another \(m\)-qubit ancilla register
+initialized at \(\ket{0^m}\). Then we can use an $n$-qubit CNOT controlled on the output register and obtain
+\begin{equation}\label{eqn:cnot_working_copy}
+\ket{0^m}\ket{g(x)}\ket{f(x)}\ket{x}\mapsto 
+\underbrace{\ket{f(x)}}_{\text{ancilla}}\underbrace{\ket{g(x)}}_{\text{working}}\underbrace{\ket{f(x)}}_{\text{output}}\underbrace{\ket{x}}_{\text{input}}.
+\end{equation}
+It is important to remember that in the operation above, the multi-qubit CNOT gate only performs the classical copying operation in the computational basis, and does not violate the no-cloning theorem.
+
+
+Recall that $U_f^{-1}=U_f^{\dag}$, we have
+\begin{equation}
+(I_m\otimes U_f^{\dag})\ket{f(x)}\ket{g(x)}\ket{f(x)}\ket{x}=
+\ket{f(x)}(U_f^{\dag}\ket{g(x)}\ket{f(x)}\ket{x})=
+\ket{f(x)}\ket{0^w}\ket{0^m}\ket{x}.\end{equation}
+Finally we apply an $n$-qubit SWAP operator on the ancilla and output registers to obtain
+\begin{equation}\label{eqn:swap_working_copy}
+\ket{f(x)}\ket{0^w}\ket{0^m}\ket{x}\mapsto \ket{0^m}\ket{0^w}\ket{f(x)}\ket{x}.
+\end{equation}
+After this procedure, both the ancilla and the working register are set to the initial state. They are no longer entangled to the input or output register, and can be reused for other purposes. This procedure is called \emph{uncomputation}.
+The circuit is shown in \cref{fig:circuit_uncompute}.
+
+\begin{figure}[H]
+\begin{displaymath}
+\begin{quantikz}
+\lstick{$\ket{0^m}$} & \qw            & \targ{}    & \qw                
+& \swap{2} & \rstick{$\ket{0^m}$} \qw \\
+\lstick{$\ket{0^w}$} & \gate[3]{U_f}  & \qw        & \gate[3]{U_f^{\dag}} & \qw & \rstick{$\ket{0^w}$}\qw\\
+\lstick{$\ket{0^m}$} &                & \ctrl{-2}  & & \targX{} 
+& \rstick{$\ket{f(x)}$}\qw\\
+\lstick{$\ket{x}$}   &                & \qw        & & \qw & 
+\rstick{$\ket{x}$}\qw\\
+\end{quantikz}
+\end{displaymath}
+\caption{Circuit for uncomputation. The \opr{CNOT} and \opr{SWAP} operators indicate the multi-qubit copy and swap operations, respectively.}
+\label{fig:circuit_uncompute}
+\end{figure}
+
+\begin{rem}[Discarding working registers]
+After the uncomputation as shown in \cref{fig:circuit_uncompute}, the first two registers are unchanged before and after the application of the circuit (though they are changed during the intermediate steps). Therefore \cref{fig:circuit_uncompute} effectively implements a unitary
+\begin{equation}
+(I_{m+w}\otimes V_f)\ket{0^m}\ket{0^{w}}\ket{0^m}\ket{x}=\ket{0^m}\ket{0^{w}}\ket{f(x)}\ket{x}
+\end{equation}
+or equivalently
+\begin{equation}
+V_f\ket{0^m}\ket{x}=\ket{f(x)}\ket{x}.
+\end{equation}
+In the definition of $V_f$, all working registers have been discarded (on paper). This allows us to simplify the notation and focus on the essence of the quantum algorithms under study.
+\end{rem}
+
+
+Using the technique of uncomputation, if the map $x\mapsto f(x)$ can be efficiently implemented on a classical computer, then we can implement this map efficiently on a quantum computer as well. 
+To do this, we first turn it into a reversible map \eqref{eqn:reversible_classical}.
+All reversible single-bit and two-bit classical gates can be implemented using single-qubit and two-qubit quantum gates. 
+So the reversible map can be made into a unitary operator
+\begin{equation}
+U_f: \ket{x,y}\mapsto \ket{x,y\oplus f(x)}
+\label{eqn:reversible_quantum}
+\end{equation}
+on a quantum computer. This proves that a quantum computer is  at least as powerful as classical computers. 
+
+The unitary transformation $U_f$ in \eqref{eqn:reversible_quantum} can be applied to any superposition of states in the computational basis, e.g. 
+\begin{equation}
+U_f: \frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n} \ket{x,0^m} \mapsto \frac{1}{\sqrt{2^n}}\sum_{x\in\{0,1\}^n}
+\ket{x,f(x)}.
+\end{equation}
+This does not necessarily mean that we can efficient implement the map $\ket{x}\mapsto \ket{f(x)}$. 
+However, if $f$ is a bijection, and we have access to the inverse of the reversible circuit for computing $f^{-1}$, then we may use the technique of uncomputation to implement such a map (\cref{exer:implement_reversible}).
+
+
+\section{Fixed point number representation and classical arithmetic operations}\label{sec:fixedpoint}
+
+Let \([N]=\set{0,1,\ldots,N-1}\). Any integer \(k\in[N]\) where \(N=2^n\)
+can be expressed as an \(n\)-bit string as \(k=k_{n-1}\cdots k_0\) with
+\(k_i\in\{0,1\}\). 
+This is called the binary representation of the integer $k$. 
+It should be interpreted as
+\begin{equation}k=\sum_{i\in[n]} k_i 2^{i}.\end{equation}
+The number $k$ divided by $2^m$ ($0\le m\le n$) can be written as (note that the decimal is shifted to be after $k_m$):
+\begin{equation}
+a=\frac{k}{2^m}=\sum_{i\in[n]} k_i 2^{i-m}=:(k_{n-1}\cdots k_{m}.k_{m-1}\cdots k_0).
+\end{equation}
+The most common case is $m=n$, where
+\begin{equation}
+a=\frac{k}{2^n}=\sum_{i\in[n]} k_i 2^{i-n}=:(0.k_{n-1}\cdots k_0).
+\end{equation}
+
+Sometimes we may also write $a=0.k_{1}\cdots k_{n}$, so that $k_i$ is the $i$-th decimal of $a$ in the binary representation. For a given floating number $0\le a<1$ written as
+\begin{equation}
+a=(0.k_1\cdots k_n k_{n+1}\cdots),
+\end{equation}
+the number $(0.k_1\cdots k_n)$ is called the $n$-bit fixed point representation of $a$. Therefore to represent $a$ to additive precision $\epsilon$, we will need $n=\lceil\log_2 \epsilon\rceil$ qubits. If the sign of $a$ is also important, we may reserve one extra bit to indicate its sign.
+
+Together with the reversible computational model, we can perform classical arithmetic operations, such as $(x,y)\mapsto x+y$, $(x,y)\mapsto xy$, $x\mapsto x^{\alpha}$, $x\mapsto \cos(x)$ etc. using reversible quantum circuits. The number of ancilla qubits, and the number of elementary gates needed for implementing such quantum circuits is $\Or(\poly(n))$ (see \cite[Chapter 6]{RieffelPolak2011} for more details). 
+
+It is worth commenting that while quantum computer is \emph{theoretically} as powerful as classical computers, there is a \emph{very significant} overhead in implementing reversible classical circuits on quantum devices, both in terms of the number of ancilla qubits and the circuit depth. 
+
+\section{Fault tolerant computation}\label{sec:fault_tolerant}
+
+All previous discussions assume that quantum operations can be perfectly performed. Due to the immense technical difficulty for realizing quantum computers, both quantum gates and quantum measurements may involve (significant) errors, particularly on near-term quantum devices. However, the threshold theorem states that if the noise in individual quantum gates is below a certain constant threshold (around $10^{-4}$ or above), it is possible to efficiently perform an arbitrarily large quantum computation with any desired precision (see \cite[Section 10.6]{NielsenChuang2000}). This procedure requires quantum error correction protocols. 
+
+This course will not discuss any details on quantum error corrections. We always assume fault-tolerant protocols have been implemented, and all errors come from either approximation errors at the mathematical level, or Monte Carlo errors in the readout process due to the probabilistic nature of the measurement process.
+
+\section{Complexity of quantum algorithms}
+
+
+Let $n$ be the number of qubits needed to represent the input. A quantum algorithm is efficient if the number of gates in the quantum circuit is $\Or(\poly(n))$. Due to the probabilistic nature of the measurement outcome, we are typically satisfied if a quantum algorithm can produce the correct answer with sufficiently high probability $p$.
+For a decision problem that asks for a binary answer $0$ or $1$, we require $p>2/3$ (or at least $p > 1/2+1/\poly(n)$).
+For other problems that we have an efficient procedure to check the correctness of the answer, we require $p=\Omega(1)$. Repeating this process many times and apply the Chernoff bound \cite[Box 3.4]{NielsenChuang2000}, we can make the probability of outputting an incorrect answer vanishingly small.
+
+In quantum algorithms, the computational cost is often measured in terms of the \textit{query complexity}. Assume that we have access to black-box unitary operator $U_f$ (e.g. the one used in the reversible computation), which is often called a quantum \emph{oracle}. 
+Our goal is to perform a given task using as few queries as possible to $U_f$.
+
+
+\begin{exam}[Query access to a boolean function]
+Let $f:\{0,1\}^n\to\{0,1\}$ be a boolean function, which can be queried via the following unitary
+\begin{equation}
+U_f\ket{x}=(-1)^{f(x)}\ket{x}.
+\label{eqn:phase_kickback}
+\end{equation} 
+This is called a \emph{phase kickback}, i.e., the value of $f(x)$ is returned as a phase factor. 
+The phase kickback is an important tool in many quantum algorithms, e.g. Grover's algorithm. 
+Note that 1) $U_f$ can be applied to a superposition of states in the computational basis, and 2) Having query access to $f(x)$ does not mean that we know everything about $f(x)$, e.g. finding the set $\set{x|f(x)=0}$ can still be a difficult task.
+\end{exam}
+
+\begin{exam}[Partially specified quantum oracles]
+When designing quantum algorithms, it is common that we are not interested in the behavior of the entire unitary matrix $U_f$, but only $U_f$ applied to certain vectors. For instance, for a $(n+1)$-qubit state space, we are only interested in 
+\begin{equation}
+U_f\ket{0}\ket{x}=\ket{0}(A\ket{x})+\ket{1}(B\ket{x}).
+\label{eqn:partial_specify_U}
+\end{equation}
+This means that we have only defined the first block-column of $U_f$ as (remember that the row-major order is used)
+\begin{equation}
+U_f=\begin{pmatrix}
+A & *\\
+B & *
+\end{pmatrix}
+\end{equation}
+Here $A,B$ are $N\times N$ matrices, and $*$ stands for an arbitrary $N\times N$ matrix so that $U_f$ is unitary. 
+Of course in order to implement $U_f$ into quantum gates, we still need to specify the content of $*$. 
+However, at the conceptual level, the partially specified unitary \eqref{eqn:partial_specify_U} simplifies the design process of quantum oracles.
+\end{exam}
+
+The concept of query complexity hides the implementation details of $U_f$, and in some cases we can prove lower bounds on the number of queries to solve a certain problem, e.g. in the case of Grover's search (proving a lower bound of the number of gates among all quantum algorithms can be much harder). Furthermore, once we have access to the number of elementary gates needed to implement $U_f$, we obtain immediately the \textit{gate complexity} of the total algorithm. However, some queries can be (provably) difficult to implement, and then there can be a large gap between the query complexity and gate complexity. In order to obtain a meaningful query complexity analysis, one should also make sure that other components of the quantum algorithm will not end up dominating the total gate complexity, when all factors are taken into account.
+
+Another important measure of the complexity is the \textit{circuit depth}, i.e., the maximum number of gates along any path from an input to an output. Since quantum gates can be performed in parallel, the circuit depth is approximately equivalent to the concept of ``wall-clock time'' in classical computation, i.e., the real time needed for a quantum computer to carry out a certain task.
+Since quantum states can only be preserved for a short period of time (called the \textit{coherence time}), the circuit depth also provides an approximate measure of whether the quantum algorithm exceeds the coherence limit of a given quantum computer. In many scenarios, the maximum coherence time is the most severe limiting factor. When possible, it is often desirable to reduce the circuit depth, even if it means that the quantum circuit needs to be carried out many more times.
+
+
+Let us summarize the basic components of a typical quantum algorithm: the set of qubits can be separated into system registers (storing quantum states of interest) and ancilla registers (auxiliary registers needed to implement the unitary operation acting on system registers). Starting from an initial state, apply a series of one-/two-qubit gates, and perform measurements. Uncomputation should be performed whenever possible. Within the ancilla registers, if a register can be ``freed'' after the uncomputation, it is called a working register. Since  working registers can be reused for other purposes, the cost of  working registers is often not (explicitly) factored into the asymptotic cost analysis in the literature.
+
+\section{Notation}
+
+
+
+We use $\|\cdot\|$ to denote vector or matrix 2-norm: when $v$ is a vector we denote by $\|v\|$ its 2-norm, and when $A$ is matrix we denote by $\|A\|$ its operator norm. 
+Other matrix and vector norms will be introduced when needed.
+Unless otherwise specified, a vector $v\in\CC^N$ is an unnormalized vector, and a normalized vector (stored as a quantum state) is denoted by $\ket{v}=v/\norm{v}$.
+A vector $v$ can be expressed in terms of $j$-th component as $v=(v_j)$ or $(v)_j=v_j$. We use a $0$-based indexing, i.e., $j=0,\ldots,N-1$ or $j\in [N]$. When $1$-based indexing is used, we will explicitly write $j=1,\ldots,N$.
+We use the following asymptotic notations besides the usual $\Or$ (or ``big-O'') notation: 
+we write $f=\Omega(g)$ if $g=\Or(f)$; $f=\Theta(g)$ if $f=\Or(g)$ and $g=\Or(f)$; $f=\wt{\Or}(g)$ if $f=\Or(g\operatorname{polylog}(g))$. 
+
+
+
+\vspace{2em}
+\begin{exer}\label{exer:unitary}
+  Prove that any unitary matrix $U\in \CC^{N\times N}$ can be written as $U=e^{\I H}$, where $H$ is an Hermitian matrix.
+\end{exer}
+
+\begin{exer}
+  Prove \cref{eqn:X_spectral}.
+\end{exer}
+
+\begin{exer}
+  Write down the matrix representation of the SWAP gate, as well as the $\sqrt{\opr{SWAP}}$ and $\sqrt{\opr{iSWAP}}$ gates.
+\end{exer}
+
+\begin{exer}\label{exer:bell}
+  Prove that the Bell state \cref{eqn:bell_state} cannot be written as any product state $\ket{a}\otimes\ket{b}$.
+\end{exer}
+
+\begin{exer}
+  Prove \cref{eqn:measure_rho} holds for a general mixed state $\rho$.
+\end{exer}
+
+\begin{exer}
+Prove that an ensemble of admissible density operators is also a density operator.
+\end{exer}
+
+\begin{exer}\label{exer:no_delete}
+Prove the no-deleting theorem in \cref{eqn:no_delete}.
+\end{exer}
+
+
+\begin{exer}
+Work out the circuit for implementing \cref{eqn:cnot_working_copy} and \cref{eqn:swap_working_copy}.
+\end{exer}
+
+
+\begin{exer}\label{exer:implement_reversible}
+  Prove that if $f:\{0,1\}^n\to\{0,1\}^n$ is a bijection, and we have access to the inverse mapping $f^{-1}$, then the mapping $U_f:\ket{x}\mapsto \ket{f(x)}$ can be implemented on a quantum computer.
+\end{exer}
+
+\begin{exer}
+Prove \cref{eqn:measure_rhoB} and \cref{eqn:measure_rhoB_rhoA}.
+\end{exer}

@@ -1,0 +1,173 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{DMWL21}
+
+\bibitem[Aar13]{Aaronson2013}
+Scott Aaronson.
+\newblock {\em Quantum computing since Democritus}.
+\newblock Cambridge Univ. Pr., 2013.
+
+\bibitem[ABF16]{ArrigoBenziFenu2016}
+F.~Arrigo, M.~Benzi, and C.~Fenu.
+\newblock Computation of generalized matrix functions.
+\newblock {\em SIAM J. Matrix Anal. Appl.}, 37:836--860, 2016.
+
+\bibitem[BACS07]{BerryAhokasCleveEtAl2007}
+Dominic~W Berry, Graeme Ahokas, Richard Cleve, and Barry~C Sanders.
+\newblock {Efficient quantum algorithms for simulating sparse Hamiltonians}.
+\newblock {\em Commun. Math. Phys.}, 270(2):359--371, 2007.
+
+\bibitem[Chi21]{ChildsQuantumLec}
+Andrew Childs.
+\newblock Lecture notes on quantum algorithms, 2021.
+
+\bibitem[CKS17]{ChildsKothariSomma2017}
+Andrew~M. Childs, Robin Kothari, and Rolando~D. Somma.
+\newblock Quantum algorithm for systems of linear equations with exponentially
+  improved dependence on precision.
+\newblock {\em SIAM J. Comput.}, 46:1920--1950, 2017.
+
+\bibitem[CST{\etalchar{+}}21]{ChildsSuTranEtAl2021}
+Andrew~M Childs, Yuan Su, Minh~C Tran, Nathan Wiebe, and Shuchen Zhu.
+\newblock Theory of trotter error with commutator scaling.
+\newblock {\em Phys. Rev. X}, 11(1):011020, 2021.
+
+\bibitem[DHM{\etalchar{+}}18]{DervovicHerbsterMountneyEtAl2018}
+Danial Dervovic, Mark Herbster, Peter Mountney, Simone Severini, Na{\"\i}ri
+  Usher, and Leonard Wossnig.
+\newblock Quantum linear systems algorithms: a primer.
+\newblock {\em arXiv:1802.08227}, 2018.
+
+\bibitem[DL21]{DongLin2021}
+Yulong Dong and Lin Lin.
+\newblock Random circuit block-encoded matrix and a proposal of quantum linpack
+  benchmark.
+\newblock {\em Phys. Rev. A}, 103(6):062412, 2021.
+
+\bibitem[DMWL21]{DongMengWhaleyEtAl2021}
+Yulong Dong, Xiang Meng, K~Birgitta Whaley, and Lin Lin.
+\newblock Efficient phase factor evaluation in quantum signal processing.
+\newblock {\em Phys. Rev. A}, 103:042419, 2021.
+
+\bibitem[DW19]{DeWolfQuantumLec}
+Ronald De~Wolf.
+\newblock Quantum computing: Lecture notes.
+\newblock {\em arXiv:1907.09415}, 2019.
+
+\bibitem[Fey82]{Feynman1982}
+Richard~P Feynman.
+\newblock Simulating physics with computers.
+\newblock {\em Int. J. Theor. Phys}, 21(6/7), 1982.
+
+\bibitem[GSLW18]{GilyenSuLowEtAl2018}
+Andr{\'a}s Gily{\'e}n, Yuan Su, Guang~Hao Low, and Nathan Wiebe.
+\newblock Quantum singular value transformation and beyond: exponential
+  improvements for quantum matrix arithmetics.
+\newblock {\em arXiv:1806.01838}, 2018.
+
+\bibitem[GSLW19]{GilyenSuLowEtAl2019}
+Andr{\'a}s Gily{\'e}n, Yuan Su, Guang~Hao Low, and Nathan Wiebe.
+\newblock Quantum singular value transformation and beyond: exponential
+  improvements for quantum matrix arithmetics.
+\newblock In {\em Proceedings of the 51st Annual ACM SIGACT Symposium on Theory
+  of Computing}, pages 193--204, 2019.
+
+\bibitem[GVL13]{GolubVan2013}
+G.~H. Golub and C.~F. Van~Loan.
+\newblock {\em Matrix computations}.
+\newblock Johns Hopkins Univ. Press, Baltimore, fourth edition, 2013.
+
+\bibitem[Haa19]{Haah2019}
+J.~Haah.
+\newblock Product decomposition of periodic functions in quantum signal
+  processing.
+\newblock {\em Quantum}, 3:190, 2019.
+
+\bibitem[HBI73]{HawkinsBen-Israel1973}
+J.~B. Hawkins and A.~Ben-Israel.
+\newblock On generalized matrix functions.
+\newblock {\em Linear and Multilinear Algebra}, 1:163--171, 1973.
+
+\bibitem[HHL09]{HarrowHassidimLloyd2009}
+Aram~W Harrow, Avinatan Hassidim, and Seth Lloyd.
+\newblock Quantum algorithm for linear systems of equations.
+\newblock {\em Phys. Rev. Lett.}, 103:150502, 2009.
+
+\bibitem[JL00]{JahnkeLubich2000}
+Tobias Jahnke and Christian Lubich.
+\newblock Error bounds for exponential operator splittings.
+\newblock {\em BIT}, 40(4):735--744, 2000.
+
+\bibitem[KSV02]{KitaevShenVyalyi2002}
+Alexei~Yu Kitaev, Alexander Shen, and Mikhail~N Vyalyi.
+\newblock {\em Classical and quantum computation}.
+\newblock Number~47. American Mathematical Soc., 2002.
+
+\bibitem[LC17a]{LowChuang2017a}
+Guang~Hao Low and Isaac~L Chuang.
+\newblock Hamiltonian simulation by uniform spectral amplification.
+\newblock {\em arXiv:1707.05391}, 2017.
+
+\bibitem[LC17b]{LowChuang2017}
+Guang~Hao Low and Isaac~L. Chuang.
+\newblock Optimal hamiltonian simulation by quantum signal processing.
+\newblock {\em Phys. Rev. Lett.}, 118:010501, 2017.
+
+\bibitem[Llo96]{Lloyd1996}
+Seth Lloyd.
+\newblock Universal quantum simulators.
+\newblock {\em Science}, pages 1073--1078, 1996.
+
+\bibitem[LT20a]{LinTong2020a}
+Lin Lin and Yu~Tong.
+\newblock Near-optimal ground state preparation.
+\newblock {\em Quantum}, 4:372, 2020.
+
+\bibitem[LT20b]{LinTong2020}
+Lin Lin and Yu~Tong.
+\newblock Optimal quantum eigenstate filtering with application to solving
+  quantum linear systems.
+\newblock {\em Quantum}, 4:361, 2020.
+
+\bibitem[Nak08]{Nakahara2008}
+Mikio Nakahara.
+\newblock {\em Quantum computing: from linear algebra to physical
+  realizations}.
+\newblock CRC press, 2008.
+
+\bibitem[NC00]{NielsenChuang2000}
+Michael~A Nielsen and Isaac Chuang.
+\newblock Quantum computation and quantum information, 2000.
+
+\bibitem[NO88]{NegeleOrland1988}
+J.~W. Negele and H.~Orland.
+\newblock {\em Quantum many-particle systems}.
+\newblock Westview, 1988.
+
+\bibitem[NWZ09]{NagajWocjanZhang2009}
+Daniel Nagaj, Pawel Wocjan, and Yong Zhang.
+\newblock Fast amplification of {QMA}.
+\newblock {\em Quantum Inf. Comput.}, 9(11):1053--1068, 2009.
+
+\bibitem[Pre99]{PreskillQuantumLec}
+John Preskill.
+\newblock Lecture notes for physics 219: Quantum computation.
+\newblock {\em Caltech Lecture Notes}, 1999.
+
+\bibitem[RP11]{RieffelPolak2011}
+Eleanor~G Rieffel and Wolfgang~H Polak.
+\newblock {\em Quantum computing: A gentle introduction}.
+\newblock MIT Press, 2011.
+
+\bibitem[Sze04]{Szegedy2004}
+Mario Szegedy.
+\newblock Quantum speed-up of markov chain based algorithms.
+\newblock In {\em 45th Annual IEEE symposium on foundations of computer
+  science}, pages 32--41, 2004.
+
+\bibitem[Tha08]{Thalhammer2008}
+Mechthild Thalhammer.
+\newblock {High-order exponential operator splitting methods for time-dependent
+  Schr{\"o}dinger equations}.
+\newblock {\em SIAM J. Numer. Anal.}, 46(4):2022--2038, 2008.
+
+\end{thebibliography}
